@@ -1,12 +1,13 @@
 import { buttonStyles } from "./styled";
 
 interface Props{
-  children: React.ReactNode
+  children: React.ReactNode,
+  type?: "button" | "reset" | "submit" | undefined
 }
 
-export default function Button({ children }: Props){
+export default function Button({ children, type }: Props){
   return (
-    <button className={buttonStyles}>
+    <button type={type ? type : "button"} className={buttonStyles}>
       {children}
     </button>
   );
