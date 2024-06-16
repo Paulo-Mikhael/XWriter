@@ -32,10 +32,22 @@ function Home() {
     "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "\"", "'", "<", ">", ".",
      "?", "/", "~", "`",
   ];
-
+  const upperLetters: string[] = [
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+  ];
+  const numerals: string[] = [
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
+  ];
+  
   useEffect(() => {
-    if (passwordSituation !== "initial" && password === ""){
+    if (passwordSituation !== "initial" && password === ""){  
       setPasswordSituation("blank");
+    }
+    else if (passwordSituation !== "initial" && itHas(password, upperLetters) === false){
+      setPasswordSituation("noUpperLetter");
+    }
+    else if (passwordSituation !== "initial" && itHas(password, numerals) === false){
+      setPasswordSituation("noNumber");
     }
     else if (passwordSituation !== "initial" && itHas(password, specialCharacters) === false){
       setPasswordSituation("noSpecialCharacters");
@@ -43,7 +55,6 @@ function Home() {
     else{
       setPasswordSituation("safe");
     }
-    console.log(passwordSituation);
   }, [password]);
   
   useEffect(() => {
@@ -60,7 +71,7 @@ function Home() {
 
   function itHas(text: string, stringArray: string[]){
     for (let i=0; i < stringArray.length; i++){
-      if (text.includes(stringArray[i]) && text.replace(stringArray[i], "") !== ""){
+      if (text.includes(stringArray[i]) || text[0].includes(stringArray[i]) && text.replace(stringArray[i], "") !== ""){
         return true;
       }
     }
@@ -81,7 +92,6 @@ function Home() {
           value={email}
           onChange={(evt) => {
             setEmail(evt.target.value);
-            itHas(evt.target.value, emailDomains);
           }}
           required
         />
@@ -105,8 +115,14 @@ function Home() {
           <li className={`text-red-400 ${passwordSituation === "noSpecialCharacters" ? "initial" : "hidden"}`}>
             A senha precisa ter ao menos um caractere especial
           </li>
+          <li className={`text-red-400 ${passwordSituation === "noUpperLetter" ? "initial" : "hidden"}`}>
+            A senha precisa ter ao menos uma letra maiúscula
+          </li>
           <li className={`text-red-400 ${passwordSituation === "blank" ? "initial" : "hidden"}`}>
             O campo 'Senha' não pode ficar vazio
+          </li>
+          <li className={`text-red-400 ${passwordSituation === "noNumber" ? "initial" : "hidden"}`}>
+            A senha precisa ter ao menos um número
           </li>
         </ul>
         <Button type="submit">
