@@ -58,7 +58,7 @@ export default function CreateAccount() {
         <input
           className={`${inputStyles} ${emailSituation !== "valid" ? "border-red-400 border-b-red-400 focus:border-red-400" : ""}`}
           type="email"
-          placeholder="Email"
+          placeholder="email@gmail.com"
           value={email}
           onChange={(evt) => {
             setEmail(evt.target.value);
@@ -67,8 +67,8 @@ export default function CreateAccount() {
         />
         <input
           className={`${inputStyles} ${passwordSituation !== "safe" ? "border-red-400 border-b-red-400 focus:border-red-400" : ""}`}
-          type="text"
-          placeholder="Senha"
+          type="password"
+          placeholder="senha"
           value={password}
           onChange={(evt) => {
             setPassword(evt.target.value)

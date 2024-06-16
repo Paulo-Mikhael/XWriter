@@ -6,15 +6,13 @@ import CreateAccount from "./pages/Home/CreateAccount";
 
 export default function AppRouter() {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/post" element={<PostScreen />} />
-          <Route path="/session" element={<CreateAccount />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/post" element={<PostScreen />} />
+        <Route path="/session" element={<CreateAccount />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 }
