@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react"
 import Button from "../../components/Button"
 import Title from "../../components/Title"
-import { inputContainerStyles, sectionStyles, inputStyles, ulStyles } from "./styled"
+import { inputContainerStyles, sectionStyles, inputStyles } from "./styled"
 
 function Home() {
   const [email, setEmail] = useState<string>("");
-  const [emailSituation, setEmailSituation] = useState<null | "valid" | "blank" | "invalid">(null);
+  const [emailSituation, setEmailSituation] = useState<"initial" | "valid" | "blank" | "invalid">("initial");
+  const [password, setPassword] = useState<string>("");
+  const [passwordSituation, setPasswordSituation] = 
+    useState<"initial" | "safe" | "noSpecialCharacters" | "blank" | "noNumber" | "noUpperLetter">("initial");
+
   const emailDomains: string[] = [
     "@gmail.com",
     "@outlook.com",
@@ -24,12 +28,29 @@ function Home() {
     "@mail.ru",
     "@ymail.com",
   ];
+  const specialCharacters: string[] = [
+    "!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", "[", "{", "]", "}", "\\", "|", ";", ":", "\"", "'", "<", ">", ".",
+     "?", "/", "~", "`",
+  ];
 
   useEffect(() => {
-    if (emailSituation && email === ""){
+    if (passwordSituation !== "initial" && password === ""){
+      setPasswordSituation("blank");
+    }
+    else if (passwordSituation !== "initial" && itHas(password, specialCharacters) === false){
+      setPasswordSituation("noSpecialCharacters");
+    }
+    else{
+      setPasswordSituation("safe");
+    }
+    console.log(passwordSituation);
+  }, [password]);
+  
+  useEffect(() => {
+    if (emailSituation !== "initial" && email === ""){
       setEmailSituation("blank") 
     }
-    else if (emailSituation && validEmail(email) === false){
+    else if (emailSituation !== "initial" && itHas(email, emailDomains) === false){
       setEmailSituation("invalid")
     }
     else{
@@ -37,9 +58,9 @@ function Home() {
     }
   }, [email]);
 
-  function validEmail(inputEmail: string){
-    for (let i=0; i < emailDomains.length; i++){
-      if (inputEmail.includes(emailDomains[i]) && inputEmail.replace(emailDomains[i], "") !== ""){
+  function itHas(text: string, stringArray: string[]){
+    for (let i=0; i < stringArray.length; i++){
+      if (text.includes(stringArray[i]) && text.replace(stringArray[i], "") !== ""){
         return true;
       }
     }
@@ -60,22 +81,32 @@ function Home() {
           value={email}
           onChange={(evt) => {
             setEmail(evt.target.value);
-            validEmail(evt.target.value);
+            itHas(evt.target.value, emailDomains);
           }}
           required
         />
         <input 
-          className={inputStyles} 
+          className={`${inputStyles} ${passwordSituation !== "safe" ? "border-red-400 border-b-red-400 focus:border-red-400" : ""}`} 
           type="password" 
           placeholder="Senha" 
+          value={password}
+          onChange={(evt) => {
+            setPassword(evt.target.value)
+          }}
           required
         />
-        <ul className={`${ulStyles} ${emailSituation === "valid" ? "hidden" : "block"}`}>
-          <li className={`text-red-400 ${emailSituation === "blank" ? "block" : "hidden"}`}>
+        <ul className="list-disc list-inside">
+          <li className={`text-red-400 ${emailSituation === "blank" ? "initial" : "hidden"}`}>
             O campo 'Email' não pode ficar vazio
           </li>
-          <li className={`text-red-400 ${emailSituation === "invalid" ? "block" : "hidden"}`}>
+          <li className={`text-red-400 ${emailSituation === "invalid" ? "initial" : "hidden"}`}>
             Email inválido
+          </li>
+          <li className={`text-red-400 ${passwordSituation === "noSpecialCharacters" ? "initial" : "hidden"}`}>
+            A senha precisa ter ao menos um caractere especial
+          </li>
+          <li className={`text-red-400 ${passwordSituation === "blank" ? "initial" : "hidden"}`}>
+            O campo 'Senha' não pode ficar vazio
           </li>
         </ul>
         <Button type="submit">

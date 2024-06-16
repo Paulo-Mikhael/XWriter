@@ -24,12 +24,7 @@ const styledInput: string[] = [
   "focus:border-blue-500",
   "w-96"
 ]
-const styledUl: string[] = [
-  "list-disc",
-  "list-inside",
-]
 
-export const ulStyles = styledUl.join(" ");
 export const sectionStyles = styledSection.join(" ");
 export const inputContainerStyles = inputContainer.join(" ");
 export const inputStyles = styledInput.join(" ");
