@@ -102,7 +102,7 @@ export default function CreateAccount() {
           Criar Conta
         </Button>
       </form>
-      <p className="font-medium">
+      <p className="font-medium text-center">
         Já possui uma conta? <Link to="/" className="text-sky-400 cursor-pointer">Acesse agora!</Link>
       </p>
     </section>

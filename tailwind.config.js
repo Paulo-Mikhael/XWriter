@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 export default {
   content: [
     "./index.html",
@@ -8,6 +9,9 @@ export default {
     extend: {
       height: {
         '90vh': '90vh'
+      },
+      screens: {
+        'mobile': {'max': '400px'},
       }
     },
   },

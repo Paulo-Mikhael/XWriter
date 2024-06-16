@@ -10,7 +10,9 @@ const styledSection: string[] = [
 const inputContainer: string[] = [
   "flex",
   "flex-col",
-  "gap-2"
+  "gap-2",
+  "w-96",
+  "mobile:w-56"
 ]
 const styledInput: string[] = [
   "px-3",
@@ -22,7 +24,7 @@ const styledInput: string[] = [
   "outline-none",
   "rounded-md",
   "focus:border-blue-500",
-  "w-96"
+  "w-full"
 ]
 
 export const sectionStyles = styledSection.join(" ");

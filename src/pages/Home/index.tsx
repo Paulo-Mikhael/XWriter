@@ -35,7 +35,7 @@ function Home() {
       <form className={inputContainerStyles} onSubmit={onSubmit}>
         <input 
           {...register("email")}
-          className={inputStyles} 
+          className={`${inputStyles}`} 
           type="email" 
           placeholder="Email" 
           required
@@ -56,7 +56,7 @@ function Home() {
           Acessar Plataforma
         </Button>
       </form>
-      <p className="font-medium">
+      <p className="font-medium text-center">
         Não possui uma conta? <Link to="/session" className="text-sky-400 cursor-pointer">Crie uma agora!</Link>
       </p>
     </section>
