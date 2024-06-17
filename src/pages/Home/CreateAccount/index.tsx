@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { inputContainerStyles, inputStyles, sectionStyles } from "../styled";
 import { upperLetters, numerals, specialCharacters, emailDomains, Users } from "../../../data";
 import { itHas } from "../../../util";
-import { Account } from "../../../interfaces";
+import { IAccount } from "../../../interfaces";
 
 export default function CreateAccount() {
   const [email, setEmail] = useState<string>("");
@@ -44,7 +44,7 @@ export default function CreateAccount() {
       setEmailSituation("valid");
     }
   }, [email]);
-  function addUser(account: Account){
+  function addUser(account: IAccount){
     Users.push(account);
     navigate("/");
   }

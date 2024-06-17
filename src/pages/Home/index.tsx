@@ -3,13 +3,13 @@ import Title from "../../components/Title"
 import { inputContainerStyles, sectionStyles, inputStyles } from "./styled"
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Account } from "../../interfaces";
+import { IAccount } from "../../interfaces";
 import { Users } from "../../data";
 import { useEffect, useState } from "react";
 
 function Home() {
   const [userState, setUserState] = useState<"invalid" | "valid" | undefined>(undefined);
-  const { handleSubmit, register } = useForm<Account>();
+  const { handleSubmit, register } = useForm<IAccount>();
   const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
