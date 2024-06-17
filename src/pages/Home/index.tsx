@@ -3,7 +3,7 @@ import Title from "../../components/Title"
 import { inputContainerStyles, sectionStyles, inputStyles } from "./styled"
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { Account } from "../../interfaces/account";
+import { Account } from "../../interfaces";
 import { Users } from "../../data";
 import { useEffect, useState } from "react";
 

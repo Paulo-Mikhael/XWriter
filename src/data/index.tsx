@@ -1,6 +1,6 @@
-import { Account } from "../interfaces/account";
+import { IAccount } from "../interfaces";
 
-export const Users: Account[] = [
+export const Users: IAccount[] = [
   {
     email: "test@gmail.com",
     senha: "Test123#"

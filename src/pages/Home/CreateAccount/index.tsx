@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { inputContainerStyles, inputStyles, sectionStyles } from "../styled";
 import { upperLetters, numerals, specialCharacters, emailDomains, Users } from "../../../data";
 import { itHas } from "../../../util";
-import { Account } from "../../../interfaces/account";
+import { Account } from "../../../interfaces";
 
 export default function CreateAccount() {
   const [email, setEmail] = useState<string>("");

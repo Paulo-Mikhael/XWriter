@@ -8,7 +8,7 @@ export default {
   theme: {
     extend: {
       height: {
-        '90vh': '90vh'
+        '92vh': '92vh'
       },
       screens: {
         'mobile': {'max': '400px'},
