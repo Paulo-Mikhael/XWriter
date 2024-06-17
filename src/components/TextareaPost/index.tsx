@@ -20,13 +20,11 @@ export default function TextareaPost() {
         <p className={`${twPStyles} text-green-500 font-bold`}>
           Você ainda pode digitar 255 caracteres
         </p>
-        <div className="w-20">
-          <Button background="bg-sky-500">
-            Postar
-          </Button>
-        </div>
+        <Button background="bg-sky-500" width="w-20">
+          Postar
+        </Button>
       </div>
-      <PostCard {...card}/>
+      <PostCard {...card} />
     </div>
   );
 }

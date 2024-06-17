@@ -4,10 +4,11 @@ interface Props{
   children: React.ReactNode,
   type?: "button" | "reset" | "submit" | undefined,
   disabled?: boolean,
-  background?: string
+  background?: string,
+  width?: string
 }
 
-export default function Button({ children, type, disabled, background }: Props){
+export default function Button({ children, type, disabled, background, width }: Props){
   return (
     <button 
       type={type ? type : "button"} 
@@ -15,6 +16,7 @@ export default function Button({ children, type, disabled, background }: Props){
         ${buttonStyles} 
         ${disabled === true ? 'bg-emerald-700 cursor-not-allowed' : ''}
         ${background ? background : ""}
+        ${width ? width : ""}
       `}
     >
       {children}
