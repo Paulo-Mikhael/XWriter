@@ -7,12 +7,12 @@ import { IAccount } from "../../interfaces";
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-import credentials from '../../data/firebaseCredentials.json';
 
 function Home() {
   const [userState, setUserState] = useState<"invalid" | "valid" | undefined>(undefined);
   const { handleSubmit, register, watch } = useForm<IAccount>();
   const navigate = useNavigate();
+  const credentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
   const app = initializeApp(credentials);
   const auth = getAuth(app);
 

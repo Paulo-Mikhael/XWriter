@@ -1,10 +1,7 @@
-import { initializeApp } from "firebase/app";
 import { IPostCard } from "../../interfaces";
 import Button from "../Button";
 import PostCard from "../PostCard";
 import { twPStyles, twTextareaStyles } from "./styled";
-import credentials from '../../data/firebaseCredentials.json';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function TextareaPost() {
   const card: IPostCard = {
@@ -12,9 +9,6 @@ export default function TextareaPost() {
     userEmail: "test@gmail.com",
     dateHour: new Date("2022-01-15T12:40")
   }
-  const app = initializeApp(credentials);
-  const auth = getAuth(app);
-  
   return (
     <div className="flex flex-col gap-3">
       <p className={twPStyles}>

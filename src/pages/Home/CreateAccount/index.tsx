@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { inputContainerStyles, inputStyles, sectionStyles } from "../styled";
 import { upperLetters, numerals, specialCharacters, emailDomains } from "../../../data";
 import { itHas } from "../../../util";
-import credentials from "../../../data/firebaseCredentials.json";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
@@ -16,6 +15,7 @@ export default function CreateAccount() {
   const [passwordSituation, setPasswordSituation] =
     useState<"initial" | "safe" | "noSpecialCharacters" | "blank" | "noNumber" | "noUpperLetter">("initial");
   const navigate = useNavigate();
+  const credentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
   const app = initializeApp(credentials);
   const auth = getAuth(app);
 
