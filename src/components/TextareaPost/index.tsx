@@ -32,6 +32,7 @@ export default function TextareaPost() {
   const analytics = getAnalytics(app);
   const auth = getAuth(app);
   console.log(auth);
+  console.log(analytics);
 
   function Auth() {
     signInWithEmailAndPassword(auth, "paulomiguelbentes@gmail.com", "firebase123")
