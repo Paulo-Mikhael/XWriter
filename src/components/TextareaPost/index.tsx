@@ -4,6 +4,7 @@ import PostCard from "../PostCard";
 import { twPStyles, twTextareaStyles } from "./styled";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export default function TextareaPost() {
   const card: IPostCard = {
@@ -29,7 +30,23 @@ export default function TextareaPost() {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
-  console.log(analytics);
+  const auth = getAuth(app);
+  console.log(auth);
+
+  function Auth() {
+    signInWithEmailAndPassword(auth, "paulomiguelbentes@gmail.com", "firebase123")
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log("Usuário logado:", user.email);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.log("Erro de autenticação:", errorCode, errorMessage);
+      });
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -41,9 +58,11 @@ export default function TextareaPost() {
         <p className={`${twPStyles} text-green-500 font-bold`}>
           Você ainda pode digitar 255 caracteres
         </p>
-        <Button background="bg-sky-500" width="w-24">
-          Postar
-        </Button>
+        <div className="w-20">
+          <Button background="bg-sky-500" onClick={() => Auth()}>
+            Postar
+          </Button>
+        </div>
       </div>
       <PostCard {...card} />
     </div>

@@ -5,10 +5,11 @@ interface Props{
   type?: "button" | "reset" | "submit" | undefined,
   disabled?: boolean,
   background?: string,
-  width?: string
+  width?: string,
+  onClick?: () => void
 }
 
-export default function Button({ children, type, disabled, background, width }: Props){
+export default function Button({ children, type, disabled, background, width, onClick }: Props){
   return (
     <button 
       type={type ? type : "button"} 
@@ -18,6 +19,7 @@ export default function Button({ children, type, disabled, background, width }: 
         ${background ? background : ""}
         ${width ? width : ""}
       `}
+      onClick={onClick}
     >
       {children}
     </button>
