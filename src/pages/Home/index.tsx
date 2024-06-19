@@ -4,28 +4,36 @@ import { inputContainerStyles, sectionStyles, inputStyles } from "./styled"
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { IAccount } from "../../interfaces";
-import { Users } from "../../data";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import credentials from '../../data/firebaseCredentials.json';
 
 function Home() {
   const [userState, setUserState] = useState<"invalid" | "valid" | undefined>(undefined);
-  const { handleSubmit, register } = useForm<IAccount>();
+  const { handleSubmit, register, watch } = useForm<IAccount>();
   const navigate = useNavigate();
+  const app = initializeApp(credentials);
+  const auth = getAuth(app);
 
-  const onSubmit = handleSubmit((data) => {
-    if (Users.find(item => item.email === data.email && item.senha === data.senha)){
-      setUserState("valid");
-    }else{
-      setUserState("invalid");
-    }
+  const onSubmit = handleSubmit(() => {
+    Conect();
   });
 
-  useEffect(() => {
-    if (userState === "valid"){
-      navigate("/post");
-    }
-  }, [userState]);
-
+  function Conect() {
+    signInWithEmailAndPassword(auth, watch("email"), watch("senha"))
+      .then(() => {
+        setUserState("valid");
+        navigate("/post");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        
+        console.log("Erro de autenticação:", errorCode, errorMessage);
+        setUserState("invalid");
+      });
+  }
   
   return (
     <section className={sectionStyles}>

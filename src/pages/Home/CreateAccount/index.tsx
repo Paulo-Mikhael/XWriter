@@ -3,9 +3,11 @@ import Title from "../../../components/Title";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { inputContainerStyles, inputStyles, sectionStyles } from "../styled";
-import { upperLetters, numerals, specialCharacters, emailDomains, Users } from "../../../data";
+import { upperLetters, numerals, specialCharacters, emailDomains } from "../../../data";
 import { itHas } from "../../../util";
-import { IAccount } from "../../../interfaces";
+import credentials from "../../../data/firebaseCredentials.json";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
 
 export default function CreateAccount() {
   const [email, setEmail] = useState<string>("");
@@ -14,6 +16,8 @@ export default function CreateAccount() {
   const [passwordSituation, setPasswordSituation] =
     useState<"initial" | "safe" | "noSpecialCharacters" | "blank" | "noNumber" | "noUpperLetter">("initial");
   const navigate = useNavigate();
+  const app = initializeApp(credentials);
+  const auth = getAuth(app);
 
   useEffect(() => {
     if (passwordSituation !== "initial" && password === "") {
@@ -44,9 +48,22 @@ export default function CreateAccount() {
       setEmailSituation("valid");
     }
   }, [email]);
-  function addUser(account: IAccount){
-    Users.push(account);
+  function addUser(){
+    Auth();
     navigate("/");
+  }
+  function Auth() {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(`Usuário criado: ${user}`);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.log("Erro de autenticação:", errorCode, errorMessage);
+      });
   }
 
   return (
@@ -54,7 +71,7 @@ export default function CreateAccount() {
       <Title>
         Boas Vindas ao XWriter!
       </Title>
-      <form className={inputContainerStyles} onSubmit={() => addUser({ email: email, senha: password })}>
+      <form className={inputContainerStyles} onSubmit={() => addUser()}>
         <input
           className={`${inputStyles} ${emailSituation !== "valid" ? "border-red-400 border-b-red-400 focus:border-red-400" : ""}`}
           type="email"
