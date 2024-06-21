@@ -1,5 +1,5 @@
 const twSectionClasses: string[] = [
-  "h-92vh",
+  "bg-slate-200",
   "flex",
   "justify-center",
   "items-start",

@@ -4,9 +4,9 @@ import { twSectionStyles } from "./styled";
 
 export default function PostScreen() {
   return (
-    <div className="bg-slate-200">
+    <div>
       <Header />
-      <section className={twSectionStyles}>
+      <section className={`${twSectionStyles}`}>
         <div className="w-11/12">
           <TextareaPost />
         </div>

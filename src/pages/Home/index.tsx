@@ -24,6 +24,7 @@ function Home() {
     signInWithEmailAndPassword(auth, watch("email"), watch("senha"))
       .then(() => {
         setUserState("valid");
+        console.clear();
         navigate("/post");
       })
       .catch((error) => {

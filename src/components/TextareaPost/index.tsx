@@ -58,12 +58,19 @@ export default function TextareaPost() {
         }
       }
 
-      setCards(posts => [...posts, ...updatedCards]);
+      setCards(posts => organizaArrayPorEmail([...posts, ...updatedCards], ActualUser(auth)));
     });
   }
   useEffect(() => {
     readUsersData();
   }, []);
+  function organizaArrayPorEmail(array: IPostCard[], email: string) {
+    const itensComEmail = array.filter(item => item.userEmail === email);
+  
+    const itensSemEmail = array.filter(item => item.userEmail !== email);
+  
+    return [...itensComEmail, ...itensSemEmail];
+  }
 
   return (
     <div className="flex flex-col gap-3">
@@ -96,7 +103,7 @@ export default function TextareaPost() {
           </Button>
         </div>
       </div>
-      <div className="w-full h-80 overflow-y-scroll flex flex-col gap-4">
+      <div className="w-full min-h-80 flex flex-col gap-4">
         {cards.map(post => (
           <PostCard key={post.id} {...post} />
         ))}

@@ -8,7 +8,7 @@ export default function PostCard({ postText, userEmail, dateHour }: IPostCard) {
   const app = initializeApp(credentials);
   const auth = getAuth(app);
   return (
-    <div className={`${userEmail === ActualUser(auth) ? "bg-sky-200" : "bg-white"} p-6`}>
+    <div className={`${userEmail === ActualUser(auth) ? "bg-sky-200" : "bg-white"} p-6 rounded-md`}>
       <h1 className="text-xl font-semibold overflow-hidden text-ellipsis">
         {postText}
       </h1>
