@@ -3,7 +3,8 @@ export interface IAccount {
   senha: string
 }
 export interface IPostCard {
-  postText: string,
+  id: string,
+  postText: string, 
   userEmail: string,
   dateHour: Date
 }
