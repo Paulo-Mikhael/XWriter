@@ -82,7 +82,8 @@ export default function TextareaPost() {
       ></textarea>
       <div className="flex justify-between">
         <p className={`${twPStyles} text-green-500 font-bold`}>
-          Você ainda pode digitar {`${250 - postText.length}`} caracteres<br/><b className="text-black">{cards.length} Posts</b>
+          Você ainda pode digitar {`${250 - postText.length}`} caracteres<br/>
+          <b className="text-black">Mostrando todos os {cards.length} Posts</b>
         </p>
         <div className="w-20">
           <Button

@@ -9,7 +9,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
 function Home() {
-  const [userState, setUserState] = useState<"invalid" | "valid" | undefined>(undefined);
+  const [userState, setUserState] = useState<"invalid" | "valid" | "loading" | undefined>(undefined);
   const { handleSubmit, register, watch } = useForm<IAccount>();
   const navigate = useNavigate();
   const credentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
@@ -60,8 +60,12 @@ function Home() {
             Usuário não cadastrado
           </li>
         </ul>
-        <Button type="submit">
-          Acessar Plataforma
+        <Button 
+          disabled={userState === "loading" ? true : false} 
+          type="submit"
+          onClick={() => setUserState("loading")}
+        >
+          {userState === "loading" ? "Carregando..." : "Acessar Plataforma"}
         </Button>
       </form>
       <p className="font-medium text-center">

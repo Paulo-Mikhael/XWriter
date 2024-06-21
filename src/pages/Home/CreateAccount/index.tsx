@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { inputContainerStyles, inputStyles, sectionStyles } from "../styled";
 import { upperLetters, numerals, specialCharacters, emailDomains } from "../../../data";
 import { itHas } from "../../../util";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
 export default function CreateAccount() {
@@ -50,13 +50,25 @@ export default function CreateAccount() {
   }, [email]);
   function addUser(){
     Auth();
-    navigate("/");
+  }
+  function Conect() {
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        navigate("/post");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        
+        console.log("Erro de autenticação:", errorCode, errorMessage);
+      });
   }
   function Auth() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(`Usuário criado: ${user}`);
+        Conect();
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -71,7 +83,7 @@ export default function CreateAccount() {
       <Title>
         Boas Vindas ao XWriter!
       </Title>
-      <form className={inputContainerStyles} onSubmit={() => addUser()}>
+      <form className={inputContainerStyles}>
         <input
           className={`${inputStyles} ${emailSituation !== "valid" ? "border-red-400 border-b-red-400 focus:border-red-400" : ""}`}
           type="email"
@@ -113,7 +125,7 @@ export default function CreateAccount() {
           </li>
         </ul>
         <Button 
-          type="submit" 
+          onClick={() => addUser()}
           disabled={emailSituation === "valid" && passwordSituation === "safe" ? false : true}
         >
           Criar Conta

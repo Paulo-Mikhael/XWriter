@@ -1,8 +1,14 @@
+import { initializeApp } from "firebase/app";
 import { IPostCard } from "../../interfaces";
+import { ActualUser } from "../../util";
+import { getAuth } from "firebase/auth";
 
 export default function PostCard({ postText, userEmail, dateHour }: IPostCard) {
+  const credentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
+  const app = initializeApp(credentials);
+  const auth = getAuth(app);
   return (
-    <div className="bg-white p-6">
+    <div className={`${userEmail === ActualUser(auth) ? "bg-sky-200" : "bg-white"} p-6`}>
       <h1 className="text-xl font-semibold overflow-hidden text-ellipsis">
         {postText}
       </h1>
