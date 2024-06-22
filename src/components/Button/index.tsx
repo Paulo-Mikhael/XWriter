@@ -16,8 +16,7 @@ export default function Button({ children, type, disabled, background, width, on
       type={type ? type : "button"} 
       className={`
         ${buttonStyles} 
-        ${disabled === true ? 'bg-emerald-700 cursor-not-allowed' : ''}
-        ${disabled === true && disabledBackground ? `${disabledBackground} cursor-not-allowed` : ''}
+        ${disabled === true ? `bg-emerald-700 cursor-not-allowed ${disabledBackground ? disabledBackground : ""}` : ''}
         ${background ? background : ""}
         ${width ? width : ""}
       `}

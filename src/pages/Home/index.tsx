@@ -25,18 +25,16 @@ function Home() {
     signInWithEmailAndPassword(auth, watch("email"), watch("senha"))
       .then(() => {
         setUserState("valid");
-        navigate("/post");
+        navigate("/post", { replace: true });
       })
-      .catch(() => {
+      .catch((error) => {
         if (watch("email") === "" || watch("senha") === ""){
           setUserState("blank");
-        }
-        else if (watch("email").indexOf("@") === -1) {
-          setUserState(undefined);
         }
         else{
           setUserState("invalid");
         }
+        console.log(error.code);
       });
   }
 
@@ -70,7 +68,7 @@ function Home() {
         </div>
         <ul className="list-disc list-inside">
           <li className={`text-red-400 ${userState === "invalid" && userState !== undefined ? "initial" : "hidden"}`}>
-            Usuário não cadastrado
+            Email ou Senha incorretos
           </li>
           <li className={`text-red-400 ${userState === "blank" && userState !== undefined ? "initial" : "hidden"}`}>
             Os campos 'Email' e 'Senha' são obrigatórios
@@ -80,7 +78,9 @@ function Home() {
           disabled={userState === "loading" ? true : false}
           type="submit"
           onClick={() => {
-            if (!watch("email").includes("@") && watch("email") !== ""){
+            const afterEmail = watch("email").split("@");
+
+            if (!watch("email").includes("@") || afterEmail[1] === "" && watch("email") !== ""){
               setUserState(undefined);
             }else{
               setUserState("loading");

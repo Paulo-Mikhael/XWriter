@@ -9,9 +9,10 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } f
 import { initializeApp } from "firebase/app";
 
 export default function CreateAccount() {
+  const [buttonState, setButtonState] = useState<"loading" | "initial">("initial");
   const [passwordState, setPasswordState] = useState<"hidden" | "show">("hidden");
   const [email, setEmail] = useState<string>("");
-  const [emailSituation, setEmailSituation] = useState<"initial" | "valid" | "blank" | "invalid">("initial");
+  const [emailSituation, setEmailSituation] = useState<"initial" | "valid" | "blank" | "invalid" | "alredy-in-use">("initial");
   const [password, setPassword] = useState<string>("");
   const [passwordSituation, setPasswordSituation] =
     useState<"initial" | "safe" | "noSpecialCharacters" | "blank" | "noNumber" | "noUpperLetter">("initial");
@@ -55,7 +56,7 @@ export default function CreateAccount() {
   function Conect() {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
-        navigate("/post");
+        navigate("/post", { replace: true });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -66,16 +67,20 @@ export default function CreateAccount() {
   }
   function Auth() {
     createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        console.log(`Usuário criado: ${user}`);
+      .then(() => {
         Conect();
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
 
-        console.log("Erro de autenticação:", errorCode, errorMessage);
+        if (errorCode === "auth/email-already-in-use"){
+          setEmailSituation("alredy-in-use");
+          setButtonState("initial");
+          return;
+        }
+
+        console.log("Erro de autenticação:", errorCode, "Mensagem", errorMessage);
       });
   }
 
@@ -121,6 +126,9 @@ export default function CreateAccount() {
           <li className={`text-red-400 ${emailSituation === "invalid" ? "initial" : "hidden"}`}>
             Email inválido
           </li>
+          <li className={`text-red-400 ${emailSituation === "alredy-in-use" ? "initial" : "hidden"}`}>
+            Esse email já está sendo utilizado
+          </li>
           <li className={`text-red-400 ${passwordSituation === "noSpecialCharacters" ? "initial" : "hidden"}`}>
             A senha precisa ter ao menos um caractere especial
           </li>
@@ -135,10 +143,21 @@ export default function CreateAccount() {
           </li>
         </ul>
         <Button
-          onClick={() => addUser()}
-          disabled={emailSituation === "valid" && passwordSituation === "safe" ? false : true}
+          onClick={() => {
+            addUser();
+            if (email === ""){
+              setEmailSituation("blank");
+            }
+            else if (password === ""){
+              setPasswordSituation("blank");
+            }
+            else if (emailSituation === "valid" && passwordSituation === "safe"){
+              setButtonState("loading");
+            }
+          }}
+          disabled={emailSituation === "valid" && passwordSituation === "safe" && buttonState === "initial" ? false : true}
         >
-          Criar Conta
+          {buttonState === "loading" ? "Carregando..." : "Criar Conta"}
         </Button>
       </form>
       <p className="font-medium text-center">

@@ -16,9 +16,10 @@ export default function TextareaPost() {
   const database = getDatabase(app);
   const [postText, setPostText] = useState<string>("");
   const [cards, setCards] = useState<IPostCard[]>([]);
+  const [requestState, setRequestState] = useState<"loading" | "done">("loading");
 
   function post(text: string) {
-    if (text !== "") {
+    if (text.trim() !== "") {
       const date = new Date();
       const isoDate = date.toISOString();
       const newPost: IPostCard = {
@@ -59,6 +60,7 @@ export default function TextareaPost() {
       }
 
       setCards(posts => organizaArrayPorEmail([...posts, ...updatedCards], ActualUser(auth)));
+      setRequestState("done");
     });
   }
   useEffect(() => {
@@ -89,15 +91,17 @@ export default function TextareaPost() {
       ></textarea>
       <div className="flex justify-between">
         <p className={`${twPStyles} text-green-500 font-bold`}>
-          Você ainda pode digitar {`${250 - postText.length}`} caracteres<br/>
-          <b className="text-black">Mostrando todos os {cards.length} Posts</b>
+          Você ainda pode digitar {`${250 - postText.length}`} caracteres<br/><br/>
+          <b className="text-black">
+            {requestState === "done" ? `Mostrando todos os ${cards.length} Post${cards.length > 1 ? "s" : ""}` : "Carregando Posts..."}
+          </b>
         </p>
         <div className="w-20">
           <Button
             disabledBackground="bg-sky-700"
             background="bg-sky-500"
             onClick={() => post(postText)}
-            disabled={postText === "" ? true : false}
+            disabled={postText.trim() === "" ? true : false}
           >
             Postar
           </Button>
