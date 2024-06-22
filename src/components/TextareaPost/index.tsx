@@ -4,14 +4,13 @@ import Button from "../Button";
 import PostCard from "../PostCard";
 import { twPStyles, twTextareaStyles } from "./styled";
 import { ActualUser } from "../../util";
-import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getDatabase, onValue, ref, set } from "firebase/database";
 import { v4 as uuidV4 } from 'uuid';
+import { initializeFirebase } from "../../data";
 
 export default function TextareaPost() {
-  const credentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
-  const app = initializeApp(credentials);
+  const app = initializeFirebase;
   const auth = getAuth(app);
   const database = getDatabase(app);
   const [postText, setPostText] = useState<string>("");

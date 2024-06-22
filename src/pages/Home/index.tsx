@@ -6,37 +6,31 @@ import { useForm } from "react-hook-form";
 import { IAccount } from "../../interfaces";
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app";
+import { initializeFirebase } from "../../data";
 
 function Home() {
   const [userState, setUserState] = useState<"invalid" | "valid" | "loading" | "blank" | undefined>(undefined);
   const [passwordState, setPasswordState] = useState<"hidden" | "show">("hidden");
   const { handleSubmit, register, watch } = useForm<IAccount>();
   const navigate = useNavigate();
-  const credentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
-  const app = initializeApp(credentials);
+  const app = initializeFirebase;
   const auth = getAuth(app);
 
   const onSubmit = handleSubmit(() => {
-    Conect();
-  });
-
-  function Conect() {
     signInWithEmailAndPassword(auth, watch("email"), watch("senha"))
-      .then(() => {
-        setUserState("valid");
-        navigate("/post", { replace: true });
-      })
-      .catch((error) => {
-        if (watch("email") === "" || watch("senha") === ""){
-          setUserState("blank");
-        }
-        else{
-          setUserState("invalid");
-        }
-        console.log(error.code);
-      });
-  }
+    .then(() => {
+      setUserState("valid");
+      navigate("/post", { replace: true });
+    })
+    .catch(() => {
+      if (watch("email") === "" || watch("senha") === ""){
+        setUserState("blank");
+      }
+      else{
+        setUserState("invalid");
+      }
+    });
+  });
 
   return (
     <section className={sectionStyles}>
@@ -91,7 +85,7 @@ function Home() {
         </Button>
       </form>
       <p className="font-medium text-center">
-        Não possui uma conta? <Link to="/session" className="text-sky-400 cursor-pointer">Crie uma agora!</Link>
+        Não possui uma conta? <Link to="/session" replace={true} className="text-sky-400 cursor-pointer">Crie uma agora!</Link>
       </p>
     </section>
   )

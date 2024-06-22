@@ -1,15 +1,5 @@
-import { IAccount } from "../interfaces";
+import { initializeApp } from "firebase/app";
 
-export const Users: IAccount[] = [
-  {
-    email: "test@gmail.com",
-    senha: "Test123#"
-  },
-  {
-    email: "juninho@hotmail.com",
-    senha: "Juninho123#"
-  }
-]
 export const emailDomains: string[] = [
   "@gmail.com",
   "@outlook.com",
@@ -38,3 +28,5 @@ export const upperLetters: string[] = [
 export const numerals: string[] = [
   '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
 ];
+const firebaseCredentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
+export const initializeFirebase = initializeApp(firebaseCredentials);

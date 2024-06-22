@@ -3,22 +3,20 @@ import Title from "../../../components/Title";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { inputContainerStyles, inputStyles, sectionStyles } from "../styled";
-import { upperLetters, numerals, specialCharacters, emailDomains } from "../../../data";
+import { upperLetters, numerals, specialCharacters, emailDomains, initializeFirebase } from "../../../data";
 import { itHas } from "../../../util";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { initializeApp } from "firebase/app";
 
 export default function CreateAccount() {
   const [buttonState, setButtonState] = useState<"loading" | "initial">("initial");
   const [passwordState, setPasswordState] = useState<"hidden" | "show">("hidden");
   const [email, setEmail] = useState<string>("");
-  const [emailSituation, setEmailSituation] = useState<"initial" | "valid" | "blank" | "invalid" | "alredy-in-use">("initial");
   const [password, setPassword] = useState<string>("");
+  const [emailSituation, setEmailSituation] = useState<"initial" | "valid" | "blank" | "invalid" | "alredy-in-use">("initial");
   const [passwordSituation, setPasswordSituation] =
     useState<"initial" | "safe" | "noSpecialCharacters" | "blank" | "noNumber" | "noUpperLetter">("initial");
   const navigate = useNavigate();
-  const credentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
-  const app = initializeApp(credentials);
+  const app = initializeFirebase;
   const auth = getAuth(app);
 
   useEffect(() => {
@@ -50,9 +48,7 @@ export default function CreateAccount() {
       setEmailSituation("valid");
     }
   }, [email]);
-  function addUser() {
-    Auth();
-  }
+
   function Conect() {
     signInWithEmailAndPassword(auth, email, password)
       .then(() => {
@@ -144,7 +140,7 @@ export default function CreateAccount() {
         </ul>
         <Button
           onClick={() => {
-            addUser();
+            Auth();
             if (email === ""){
               setEmailSituation("blank");
             }
@@ -161,7 +157,7 @@ export default function CreateAccount() {
         </Button>
       </form>
       <p className="font-medium text-center">
-        Já possui uma conta? <Link to="/" className="text-sky-400 cursor-pointer">Acesse agora!</Link>
+        Já possui uma conta? <Link to="/" replace={true} className="text-sky-400 cursor-pointer">Acesse agora!</Link>
       </p>
     </section>
   );

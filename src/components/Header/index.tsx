@@ -1,14 +1,13 @@
-import { initializeApp } from "firebase/app";
 import { ActualUser } from "../../util";
 import Button from "../Button";
 import Title from "../Title";
 import { twHeaderStyles } from "./styled";
 import { getAuth, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { initializeFirebase } from "../../data";
 
 export default function Header() {
-  const credentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
-  const app = initializeApp(credentials);
+  const app = initializeFirebase;
   const auth = getAuth(app);
   const navigate = useNavigate();
 

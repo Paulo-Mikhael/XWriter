@@ -1,11 +1,10 @@
-import { initializeApp } from "firebase/app";
 import { IPostCard } from "../../interfaces";
 import { ActualUser } from "../../util";
 import { getAuth } from "firebase/auth";
+import { initializeFirebase } from "../../data";
 
 export default function PostCard({ postText, userEmail, dateHour }: IPostCard) {
-  const credentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
-  const app = initializeApp(credentials);
+  const app = initializeFirebase;
   const auth = getAuth(app);
   return (
     <div className={`${userEmail === ActualUser(auth) ? "bg-sky-200" : "bg-white"} p-6 rounded-md`}>
