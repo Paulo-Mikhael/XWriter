@@ -9,7 +9,8 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 
 function Home() {
-  const [userState, setUserState] = useState<"invalid" | "valid" | "loading" | undefined>(undefined);
+  const [userState, setUserState] = useState<"invalid" | "valid" | "loading" | "blank" | undefined>(undefined);
+  const [passwordState, setPasswordState] = useState<"hidden" | "show">("hidden");
   const { handleSubmit, register, watch } = useForm<IAccount>();
   const navigate = useNavigate();
   const credentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
@@ -24,47 +25,67 @@ function Home() {
     signInWithEmailAndPassword(auth, watch("email"), watch("senha"))
       .then(() => {
         setUserState("valid");
-        console.clear();
         navigate("/post");
       })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        
-        console.log("Erro de autenticação:", errorCode, errorMessage);
-        setUserState("invalid");
+      .catch(() => {
+        if (watch("email") === "" || watch("senha") === ""){
+          setUserState("blank");
+        }
+        else if (watch("email").indexOf("@") === -1) {
+          setUserState(undefined);
+        }
+        else{
+          setUserState("invalid");
+        }
       });
   }
-  
+
   return (
     <section className={sectionStyles}>
       <Title>
         XWriter
       </Title>
       <form className={inputContainerStyles} onSubmit={onSubmit}>
-        <input 
+        <input
           {...register("email")}
-          className={`${inputStyles}`} 
-          type="email" 
-          placeholder="Email" 
-          required
+          className={`${inputStyles}`}
+          type="email"
+          placeholder="Email"
         />
-        <input 
-          {...register("senha")}
-          className={inputStyles} 
-          type="password" 
-          placeholder="Senha" 
-          required
-        />
+        <div className="relative">
+          <img 
+            src={`icons/${passwordState === "hidden" ? "show" : "hide"}-password.png`} 
+            className={`w-8 cursor-pointer absolute top-3 right-3 ${passwordState === "hidden" ? "h-5" : "h-6"}`}
+            onClick={() => {
+              passwordState === "hidden" ? setPasswordState("show") : setPasswordState("hidden")
+            }}
+          />
+          <input
+            {...register("senha")}
+            className={inputStyles}
+            type={passwordState === "hidden" ? "password" : "text"}
+            placeholder="Senha"
+            maxLength={40}
+          />
+        </div>
         <ul className="list-disc list-inside">
           <li className={`text-red-400 ${userState === "invalid" && userState !== undefined ? "initial" : "hidden"}`}>
             Usuário não cadastrado
           </li>
+          <li className={`text-red-400 ${userState === "blank" && userState !== undefined ? "initial" : "hidden"}`}>
+            Os campos 'Email' e 'Senha' são obrigatórios
+          </li>
         </ul>
-        <Button 
-          disabled={userState === "loading" ? true : false} 
+        <Button
+          disabled={userState === "loading" ? true : false}
           type="submit"
-          onClick={() => setUserState("loading")}
+          onClick={() => {
+            if (!watch("email").includes("@") && watch("email") !== ""){
+              setUserState(undefined);
+            }else{
+              setUserState("loading");
+            }
+          }}
         >
           {userState === "loading" ? "Carregando..." : "Acessar Plataforma"}
         </Button>

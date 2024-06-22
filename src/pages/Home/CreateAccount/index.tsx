@@ -9,6 +9,7 @@ import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } f
 import { initializeApp } from "firebase/app";
 
 export default function CreateAccount() {
+  const [passwordState, setPasswordState] = useState<"hidden" | "show">("hidden");
   const [email, setEmail] = useState<string>("");
   const [emailSituation, setEmailSituation] = useState<"initial" | "valid" | "blank" | "invalid">("initial");
   const [password, setPassword] = useState<string>("");
@@ -48,7 +49,7 @@ export default function CreateAccount() {
       setEmailSituation("valid");
     }
   }, [email]);
-  function addUser(){
+  function addUser() {
     Auth();
   }
   function Conect() {
@@ -59,7 +60,7 @@ export default function CreateAccount() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        
+
         console.log("Erro de autenticação:", errorCode, errorMessage);
       });
   }
@@ -94,16 +95,25 @@ export default function CreateAccount() {
           }}
           required
         />
-        <input
-          className={`${inputStyles} ${passwordSituation !== "safe" ? "border-red-400 border-b-red-400 focus:border-red-400" : ""}`}
-          type="password"
-          placeholder="senha"
-          value={password}
-          onChange={(evt) => {
-            setPassword(evt.target.value)
-          }}
-          required
-        />
+        <div className="relative">
+          <img
+            src={`icons/${passwordState === "hidden" ? "show" : "hide"}-password.png`}
+            className={`w-8 cursor-pointer absolute top-3 right-3 ${passwordState === "hidden" ? "h-5" : "h-6"}`}
+            onClick={() => {
+              passwordState === "hidden" ? setPasswordState("show") : setPasswordState("hidden")
+            }}
+          />
+          <input
+            className={`${inputStyles} ${passwordSituation !== "safe" ? "border-red-400 border-b-red-400 focus:border-red-400" : ""}`}
+            type={passwordState === "hidden" ? "password" : "text"}
+            placeholder="senha"
+            value={password}
+            onChange={(evt) => {
+              setPassword(evt.target.value)
+            }}
+            required
+          />
+        </div>
         <ul className="list-disc list-inside">
           <li className={`text-red-400 ${emailSituation === "blank" ? "initial" : "hidden"}`}>
             O campo 'Email' não pode ficar vazio
@@ -124,7 +134,7 @@ export default function CreateAccount() {
             A senha precisa ter ao menos um número
           </li>
         </ul>
-        <Button 
+        <Button
           onClick={() => addUser()}
           disabled={emailSituation === "valid" && passwordSituation === "safe" ? false : true}
         >

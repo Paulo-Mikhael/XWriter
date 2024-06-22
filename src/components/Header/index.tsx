@@ -24,13 +24,13 @@ export default function Header() {
   return (
     <header className={twHeaderStyles}>
       <Title>
-        xwriter
+        <img src="icons/logo-v1.png" className="w-8 h-8" />XWriter
       </Title>
       <div className="flex items-center gap-4">
         {ActualUser(auth) !== "not found" ? ActualUser(auth) : ""}
         <Button background="bg-red-500" width="w-12" onClick={() => SignOut()}>
           Sair
-        </Button>
+      </Button>
       </div>
     </header>
   );
