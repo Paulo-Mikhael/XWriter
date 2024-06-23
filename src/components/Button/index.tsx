@@ -7,10 +7,11 @@ interface Props{
   disabledBackground?: string,
   background?: string,
   width?: string,
-  onClick?: () => void
+  onClick?: () => void,
+  childrenAnimation?: string
 }
 
-export default function Button({ children, type, disabled, background, width, onClick, disabledBackground }: Props){
+export default function Button({ children, type, disabled, background, width, onClick, disabledBackground, childrenAnimation }: Props){
   return (
     <button 
       type={type ? type : "button"} 
@@ -22,7 +23,9 @@ export default function Button({ children, type, disabled, background, width, on
       `}
       onClick={onClick}
     >
-      {children}
+      <p className={childrenAnimation ? childrenAnimation : ""}>
+        {children}
+      </p>
     </button>
   );
 }

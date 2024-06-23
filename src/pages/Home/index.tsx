@@ -6,7 +6,8 @@ import { useForm } from "react-hook-form";
 import { IAccount } from "../../interfaces";
 import { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { initializeFirebase } from "../../data";
+import { initializeFirebase, specialCharacters } from "../../data";
+import { itHas } from "../../util";
 
 function Home() {
   const [userState, setUserState] = useState<"invalid" | "valid" | "loading" | "blank" | undefined>(undefined);
@@ -73,13 +74,20 @@ function Home() {
           type="submit"
           onClick={() => {
             const afterEmail = watch("email").split("@");
+            const scWithoutPoint = specialCharacters.filter(char => char !== ".");
 
-            if (!watch("email").includes("@") || afterEmail[1] === "" && watch("email") !== ""){
-              setUserState(undefined);
-            }else{
+            if (watch("email") !== ""){
+              if (!watch("email").includes("@") || afterEmail[1] === "" || itHas(afterEmail[1], scWithoutPoint)){
+                setUserState(undefined);
+              }else{
+                setUserState("loading");
+              }
+            }
+            else{
               setUserState("loading");
             }
           }}
+          childrenAnimation={userState === "loading" ? "animate-pulse" : ""}
         >
           {userState === "loading" ? "Carregando..." : "Acessar Plataforma"}
         </Button>

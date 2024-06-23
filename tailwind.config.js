@@ -7,8 +7,12 @@ export default {
   ],
   theme: {
     extend: {
+      width: {
+        'perfil-circle': '40px'
+      },
       height: {
-        '92vh': '92vh'
+        '92vh': '92vh',
+        'perfil-circle': '40px'
       },
       screens: {
         'mobile': {'max': '400px'},
