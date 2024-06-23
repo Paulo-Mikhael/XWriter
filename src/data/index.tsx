@@ -1,4 +1,6 @@
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getDatabase } from "firebase/database";
 
 export const emailDomains: string[] = [
   "@gmail.com",
@@ -29,4 +31,6 @@ export const numerals: string[] = [
   '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'
 ];
 const firebaseCredentials = JSON.parse(import.meta.env.VITE_FIREBASE_CONFIG);
-export const initializeFirebase = initializeApp(firebaseCredentials);
+const initializeFirebase = initializeApp(firebaseCredentials);
+export const firebaseAuth = getAuth(initializeFirebase);
+export const firebaseRealtimeDatabase = getDatabase(initializeFirebase);

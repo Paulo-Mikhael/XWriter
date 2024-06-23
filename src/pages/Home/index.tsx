@@ -5,8 +5,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { IAccount } from "../../interfaces";
 import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { initializeFirebase, specialCharacters } from "../../data";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { firebaseAuth, specialCharacters } from "../../data";
 import { itHas } from "../../util";
 
 function Home() {
@@ -14,8 +14,7 @@ function Home() {
   const [passwordState, setPasswordState] = useState<"hidden" | "show">("hidden");
   const { handleSubmit, register, watch } = useForm<IAccount>();
   const navigate = useNavigate();
-  const app = initializeFirebase;
-  const auth = getAuth(app);
+  const auth = firebaseAuth;
 
   const onSubmit = handleSubmit(() => {
     signInWithEmailAndPassword(auth, watch("email"), watch("senha"))

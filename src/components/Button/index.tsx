@@ -18,8 +18,8 @@ export default function Button({ children, type, disabled, background, width, on
       className={`
         ${buttonStyles} 
         ${disabled === true ? `bg-emerald-700 cursor-not-allowed ${disabledBackground ? disabledBackground : ""}` : ''}
-        ${background ? background : ""}
-        ${width ? width : ""}
+        ${background ? background : "bg-emerald-500"}
+        ${width ? width : "w-full"}
       `}
       onClick={onClick}
     >

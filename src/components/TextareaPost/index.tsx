@@ -4,15 +4,13 @@ import Button from "../Button";
 import PostCard from "../PostCard";
 import { twPStyles, twTextareaStyles } from "./styled";
 import { ActualUser } from "../../util";
-import { getAuth } from "firebase/auth";
-import { getDatabase, onValue, ref, set } from "firebase/database";
+import { onValue, ref, set } from "firebase/database";
 import { v4 as uuidV4 } from 'uuid';
-import { initializeFirebase } from "../../data";
+import { firebaseAuth, firebaseRealtimeDatabase } from "../../data";
 
 export default function TextareaPost() {
-  const app = initializeFirebase;
-  const auth = getAuth(app);
-  const database = getDatabase(app);
+  const auth = firebaseAuth;
+  const database = firebaseRealtimeDatabase;
   const [postText, setPostText] = useState<string>("");
   const [cards, setCards] = useState<IPostCard[]>([]);
   const [requestState, setRequestState] = useState<"loading" | "done">("loading");

@@ -1,14 +1,13 @@
-import { getAuth, signOut } from "firebase/auth";
-import { initializeFirebase } from "../../data";
-import { twPerfilCircleStyles, twPerfilContainerStyles, twPerfilImageContainerStyles } from "./styled";
+import { signOut } from "firebase/auth";
+import { twPerfilCircleStyles, twPerfilContainerStyles, twPerfilDisabledStyles, twPerfilEnabledStyles, twPerfilImageContainerStyles } from "./styled";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import { ActualUser } from "../../util";
 import { useState } from "react";
+import { firebaseAuth } from "../../data";
 
 export default function PerfilPhoto() {
-  const app = initializeFirebase;
-  const auth = getAuth(app);
+  const auth = firebaseAuth;
   const navigate = useNavigate();
   const [perfilState, setPerfilState] = useState<"enabled" | "disabled">("disabled");
 
@@ -22,10 +21,15 @@ export default function PerfilPhoto() {
   }
 
   return (
-    <button>
+    <button onBlur={() => {
+      setTimeout(() => {
+        setPerfilState("disabled")
+      }, 100);
+    }}>
       <input type="file" id="file-input" className="hidden"/>
       <div
-        className={`${perfilState === "enabled" ? `${twPerfilCircleStyles} bg-green-600 border-4 shadow-green-600/50` : twPerfilCircleStyles}`}
+        className={`w-perfil-circle h-perfil-circle ${twPerfilCircleStyles} 
+          ${perfilState === "enabled" ? twPerfilEnabledStyles : twPerfilDisabledStyles}`}
         onClick={() => {
           perfilState === "enabled" ? setPerfilState("disabled") : setPerfilState("enabled")
         }}
@@ -36,12 +40,12 @@ export default function PerfilPhoto() {
       </div>
       <div className={`${twPerfilContainerStyles} ${perfilState === "enabled" ? "initial" : "hidden"}`}>
         <div className={twPerfilImageContainerStyles}>
-          <div className={`${twPerfilCircleStyles} w-16 h-16 hover:border-none absolute -bottom-6 cursor-default`}>
+          <div className={`w-14 h-14 ${twPerfilCircleStyles} ${twPerfilDisabledStyles} hover:border-none absolute -bottom-6 cursor-default`}>
             <p className="text-white text-3xl font-bold">
               G
             </p>
           </div>
-          <p className="text-white text-sm absolute -bottom-14 cursor-text">
+          <p className="text-white text-center w-10/12 overflow-hidden text-sm absolute -bottom-14 cursor-text">
             {ActualUser(auth)}
           </p>
         </div>

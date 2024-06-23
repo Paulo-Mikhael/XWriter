@@ -1,23 +1,31 @@
 const twPerfilCircleClasses: string[] = [
-  "bg-sky-500",
-  "w-perfil-circle",
-  "h-perfil-circle",
   "rounded-full",
   "flex",
   "justify-center",
   "items-center",
   "cursor-pointer",
-  "border-sky-200",
   "border-double",
   "trasition-all",
   "duration-100",
   "hover:border-4",
   "relative",
   "saturate-150",
-  "shadow-xl",
-  "shadow-sky-500/50",
+  "shadow-lg",
 ]
 export const twPerfilCircleStyles = twPerfilCircleClasses.join(" ");
+
+const twPerfilEnabledClasses: string[] = [
+  "bg-green-600",
+  "border-4",
+  "shadow-green-600/50"
+]
+export const twPerfilEnabledStyles = twPerfilEnabledClasses.join(" ");
+const twPerfilDisabledClasses: string[] = [
+  "bg-sky-500",
+  "border-sky-200",
+  "shadow-sky-500/50"
+]
+export const twPerfilDisabledStyles = twPerfilDisabledClasses.join(" ");
 
 const twPerfilContainerClasses: string[] = [
   "absolute",

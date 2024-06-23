@@ -3,9 +3,9 @@ import Title from "../../../components/Title";
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { inputContainerStyles, inputStyles, sectionStyles } from "../styled";
-import { upperLetters, numerals, specialCharacters, emailDomains, initializeFirebase } from "../../../data";
+import { upperLetters, numerals, specialCharacters, emailDomains, firebaseAuth } from "../../../data";
 import { itHas } from "../../../util";
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 
 export default function CreateAccount() {
   const [buttonState, setButtonState] = useState<"loading" | "initial">("initial");
@@ -16,8 +16,7 @@ export default function CreateAccount() {
   const [passwordSituation, setPasswordSituation] =
     useState<"initial" | "safe" | "noSpecialCharacters" | "blank" | "noNumber" | "noUpperLetter">("initial");
   const navigate = useNavigate();
-  const app = initializeFirebase;
-  const auth = getAuth(app);
+  const auth = firebaseAuth;
 
   useEffect(() => {
     if (passwordSituation !== "initial" && password === "") {

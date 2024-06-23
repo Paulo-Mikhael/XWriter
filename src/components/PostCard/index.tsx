@@ -1,11 +1,9 @@
+import { firebaseAuth } from "../../data";
 import { IPostCard } from "../../interfaces";
 import { ActualUser } from "../../util";
-import { getAuth } from "firebase/auth";
-import { initializeFirebase } from "../../data";
 
 export default function PostCard({ postText, userEmail, dateHour }: IPostCard) {
-  const app = initializeFirebase;
-  const auth = getAuth(app);
+  const auth = firebaseAuth;
   return (
     <div className={`${userEmail === ActualUser(auth) ? "bg-sky-200" : "bg-white"} p-6 rounded-md`}>
       <h1 className="text-xl font-semibold overflow-hidden text-ellipsis">

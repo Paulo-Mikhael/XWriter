@@ -1,13 +1,11 @@
 import { ActualUser } from "../../util";
 import Title from "../Title";
 import { twHeaderStyles } from "./styled";
-import { getAuth } from "firebase/auth";
-import { initializeFirebase } from "../../data";
 import PerfilPhoto from "../PerfilPhoto";
+import { firebaseAuth } from "../../data";
 
 export default function Header() {
-  const app = initializeFirebase;
-  const auth = getAuth(app);
+  const auth = firebaseAuth;
 
   return (
     <header className={twHeaderStyles}>
