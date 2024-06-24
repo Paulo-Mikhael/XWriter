@@ -1,10 +1,10 @@
 import { signOut } from "firebase/auth";
 import { twPerfilCircleStyles, twPerfilContainerStyles, twPerfilDisabledStyles, twPerfilEnabledStyles, twPerfilImageContainerStyles } from "./styled";
 import { useNavigate } from "react-router-dom";
-import Button from "../Button";
-import { ActualUser } from "../../util";
+import Button from "../../Button";
+import { ActualUser } from "../../../util";
 import { useState } from "react";
-import { firebaseAuth } from "../../data";
+import { firebaseAuth } from "../../../data";
 
 export default function PerfilPhoto() {
   const auth = firebaseAuth;
@@ -14,7 +14,7 @@ export default function PerfilPhoto() {
   function SignOut() {
     signOut(auth).then(() => {
       console.log("Sessão terminada");
-      navigate("/");
+      navigate("/", { replace: true });
     }).catch((error) => {
       console.log(error);
     });
@@ -26,7 +26,6 @@ export default function PerfilPhoto() {
         setPerfilState("disabled")
       }, 100);
     }}>
-      <input type="file" id="file-input" className="hidden"/>
       <div
         className={`w-perfil-circle h-perfil-circle ${twPerfilCircleStyles} 
           ${perfilState === "enabled" ? twPerfilEnabledStyles : twPerfilDisabledStyles}`}
@@ -50,15 +49,8 @@ export default function PerfilPhoto() {
           </p>
         </div>
         <Button
-          background="bg-slate-700"
+          background="bg-slate-700 cursor-not-allowed"
           width="w-10/12"
-          onClick={() => {
-            const fileInput = document.querySelector("#file-input") as HTMLInputElement;
-            
-            if (fileInput){
-              fileInput.click();
-            } 
-          }}
         >
           Personalizar Perfil
         </Button>

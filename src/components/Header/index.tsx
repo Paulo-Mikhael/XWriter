@@ -1,7 +1,7 @@
 import { ActualUser } from "../../util";
 import Title from "../Title";
 import { twHeaderStyles } from "./styled";
-import PerfilPhoto from "../PerfilPhoto";
+import PerfilPhoto from "./PerfilPhoto";
 import { firebaseAuth } from "../../data";
 
 export default function Header() {

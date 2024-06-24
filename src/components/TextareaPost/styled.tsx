@@ -12,6 +12,7 @@ const twTextareaClasses: string[] = [
   "font-normal",
   "max-h-28",
   "min-h-20",
-  "focus:outline-sky-500"
+  "focus:outline-sky-500",
+  "rounded-sm"
 ]
 export const twTextareaStyles = twTextareaClasses.join(" ");

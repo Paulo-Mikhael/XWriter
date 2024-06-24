@@ -15,7 +15,7 @@ const twPerfilCircleClasses: string[] = [
 export const twPerfilCircleStyles = twPerfilCircleClasses.join(" ");
 
 const twPerfilEnabledClasses: string[] = [
-  "bg-green-600",
+  "bg-emerald-500",
   "border-4",
   "shadow-green-600/50"
 ]
