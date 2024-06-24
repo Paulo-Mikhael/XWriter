@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { IPostCard } from "../../interfaces";
 import Button from "../Button";
 import PostCard from "../PostCard";
-import { twPStyles, twTextareaStyles } from "./styled";
+import { twTextareaStyles } from "./styled";
 import { ActualUser } from "../../util";
 import { onValue, ref, set } from "firebase/database";
 import { v4 as uuidV4 } from 'uuid';
@@ -50,7 +50,7 @@ export default function TextareaPost() {
           postText: user.postText,
           dateHour: new Date(user.dateHour)
         }
-        
+
         if (!cards.find(post => post.id === newPost.id)) {
           updatedCards.push(newPost);
         }
@@ -65,15 +65,15 @@ export default function TextareaPost() {
   }, []);
   function organizaArrayPorEmail(array: IPostCard[], email: string) {
     const itensComEmail = array.filter(item => item.userEmail === email);
-  
+
     const itensSemEmail = array.filter(item => item.userEmail !== email);
-  
+
     return [...itensComEmail, ...itensSemEmail];
   }
 
   return (
     <div className="flex flex-col gap-3">
-      <p className={twPStyles}>
+      <p className="font-normal text-lg">
         Poste algum momento interessante...
       </p>
       <textarea
@@ -86,12 +86,9 @@ export default function TextareaPost() {
           setPostText(evt.target.value);
         }}
       ></textarea>
-      <div className="flex justify-between">
-        <p className={`${twPStyles} text-green-500 font-bold`}>
-          Você ainda pode digitar {`${250 - postText.length}`} caracteres<br/><br/>
-          <b className="text-black">
-            {requestState === "done" ? `Mostrando todos os ${cards.length} Post${cards.length > 1 ? "s" : ""}` : "Carregando Posts..."}
-          </b>
+      <div className="flex justify-between mb-5 flex-col sm:flex-row">
+        <p className={`text-lg text-green-500 font-bold mb-5 text-center sm:m-0`}>
+          Você ainda pode digitar {`${250 - postText.length}`} caracteres
         </p>
         <div className="w-20">
           <Button
@@ -105,6 +102,9 @@ export default function TextareaPost() {
         </div>
       </div>
       <div className="w-full min-h-80 flex flex-col gap-4">
+        <b className="text-black">
+          {requestState === "done" ? `Mostrando todos os ${cards.length} Post${cards.length > 1 ? "s" : ""}` : "Carregando Posts..."}
+        </b>
         {cards.map(post => (
           <PostCard key={post.id} {...post} />
         ))}

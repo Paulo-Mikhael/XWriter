@@ -9,7 +9,7 @@ export default function PostCard({ postText, userEmail, dateHour }: IPostCard) {
       <h1 className="text-xl font-semibold overflow-hidden text-ellipsis">
         {postText}
       </h1>
-      <div className="w-full flex h-5 mt-7 items-center justify-between">
+      <div className="w-full flex h-15 mt-7 items-start justify-between flex-col sm:flex-row sm-h5">
         <h2 className="text-lg text-sky-500">
           {userEmail}
         </h2>

@@ -1,9 +1,3 @@
-const twPClasses: string[] = [
-  "text-lg",
-  "font-normal"
-]
-export const twPStyles = twPClasses.join(" ");
-
 const twTextareaClasses: string[] = [
   "p-2",
   "outline-none",
