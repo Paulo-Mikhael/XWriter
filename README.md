@@ -52,6 +52,16 @@
 ```bash
   npm install
 ```
+### Criar um projeto Firebase com as funções 'Authentication' e 'Realtime Database' e colocar as configs desse projeto esta variável de ambiente no arquivo .env na raíz do projeto
+```bash
+  VITE_FIREBASE_CONFIG='{
+  "apiKey": "Sua API key",
+  "authDomain": "Dominío do projeto",
+  "projectId": "ID do projeto",
+  //... outras configurações
+  "databaseURL": "URL do Realtime Database do projeto"
+}'
+```
 ### Inicie o servidor
 ```bash
   npm run dev
