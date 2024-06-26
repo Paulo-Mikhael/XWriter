@@ -1,4 +1,4 @@
-import { signOut } from "firebase/auth";
+import { User, deleteUser, signOut } from "firebase/auth";
 import { twPerfilCircleStyles, twPerfilContainerStyles, twPerfilDisabledStyles, twPerfilEnabledStyles, twPerfilImageContainerStyles } from "./styled";
 import { useNavigate } from "react-router-dom";
 import Button from "../../Button";
@@ -19,6 +19,13 @@ export default function PerfilPhoto() {
       console.log(error);
     });
   }
+  function Delete(user: User){
+    deleteUser(user).then(() => {
+      navigate("/", { replace: true });
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
 
   return (
     <button onBlur={() => {
@@ -34,14 +41,14 @@ export default function PerfilPhoto() {
         }}
       >
         <p className="text-white text-xl font-bold">
-          G
+          #
         </p>
       </div>
       <div className={`${twPerfilContainerStyles} ${perfilState === "enabled" ? "initial" : "hidden"}`}>
         <div className={twPerfilImageContainerStyles}>
           <div className={`w-14 h-14 ${twPerfilCircleStyles} ${twPerfilDisabledStyles} hover:border-none absolute -bottom-6 cursor-default`}>
             <p className="text-white text-3xl font-bold">
-              G
+              #
             </p>
           </div>
           <p className="text-white text-center w-10/12 overflow-hidden text-sm absolute -bottom-14 cursor-text">
@@ -49,17 +56,18 @@ export default function PerfilPhoto() {
           </p>
         </div>
         <Button
-          background="bg-slate-700 cursor-not-allowed"
+          background="bg-slate-700"
           width="w-10/12"
+          onClick={() => SignOut()}
         >
-          Personalizar Perfil
+          Encerrar sessão
         </Button>
         <div className="w-full p-2">
           <Button
             background="bg-red-500"
-            onClick={() => SignOut()}
+            onClick={() => auth.currentUser && Delete(auth.currentUser)}
           >
-            Encerrar Sessão
+            Deletar Perfil
           </Button>
         </div>
       </div>
