@@ -46,13 +46,17 @@
 ```
 ### Entre no diretório do projeto
 ```bash
-  cd my-project
+  cd xwriter
 ```
 ### Instale as dependências
 ```bash
   npm install
 ```
-### Criar um projeto Firebase com as funções 'Authentication' e 'Realtime Database' e colocar as configs desse projeto esta variável de ambiente no arquivo .env na raíz do projeto
+### Criar um projeto Firebase com as funções 'Authentication' e 'Realtime Database', e conectar à aplicação rodando o comando abaixo e seguindo as instruções dadas [(Documentação de Auxílio)](https://firebase.google.com/docs/cli?hl=pt-br#initialize_a_firebase_project)
+```bash
+  firebase init
+```
+### Colocar as configs do projeto seu Firebase nesta variável de ambiente no arquivo .env na raíz do projeto
 ```bash
   VITE_FIREBASE_CONFIG='{
   "apiKey": "Sua API key",
@@ -71,11 +75,11 @@
   ### [Currículo (png, jpg ou pdf)](https://drive.google.com/drive/folders/1ER7n3GHZmokEsQJkf6yFAG3E0dC1oLfq?usp=drive_link)
 
 ## Confira meus outros projetos 🛠️
-  - [Fastask - Gerenciador de Tarefas](https://paulo-mikhael.github.io/fastask)
-  - [Landing Page para uma academia](https://paulo-mikhael.github.io/academia-landing-page)
-  - [Landing Page para um e-commerce de plantas](https://casa-verde-pink-phi.vercel.app/)
-  - [[Clone] Pagina da Unity](https://paulo-mikhael.github.io/pagina-unity-2024)
-  - [[Clone] Pagina do Gartic](https://paulo-mikhael.github.io/pagina-gartic-2024)
+  - [Landing Page para um e-commerce de eletrônicos](https://github.com/Paulo-Mikhael/phlox?tab=readme-ov-file#readme)
+  - [Landing Page para um e-commerce de plantas](https://github.com/Paulo-Mikhael/casa-verde?tab=readme-ov-file#readme)
+  - [Landing Page para uma academia](https://github.com/Paulo-Mikhael/academia-landing-page?tab=readme-ov-file#readme)
+  - [Fastask - Gerenciador de Tarefas](https://github.com/Paulo-Mikhael/fastask?tab=readme-ov-file#readme)
+  - [[Clone] Pagina da Unity](https://github.com/Paulo-Mikhael/pagina-unity-2024?tab=readme-ov-file#readme)
 
 ## Contatos
   [![Gmail Badge](https://img.shields.io/badge/Gmail-EA4335.svg?style=for-the-badge&logo=Gmail&logoColor=white)](https://paulo-mikhael.github.io/Portifolio/Pages/contacts/)
