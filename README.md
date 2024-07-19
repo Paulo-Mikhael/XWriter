@@ -5,8 +5,7 @@
   ### Essa aplicação web tem o objetivo de logar usuários de uma base dados, através de um formulário de criar conta se necessário, e permitir à eles, postar mensagens. O projeto foi desenvolvido em React com a ajuda de bibliotecas como tailwind css, e foi utilizado um serviço back-end gratuito para armazenar os dados, o Firebase.
 
 ## Estado do projeto 🚧
-    Completo ✔️ => Criar e conectar usuários na plataforma através de um formulário. Postagem de mensagens pela plataforma;
-    Em progresso 👨‍💻 => Trabalhando na área de personalização do perfil de usuário;
+    Completo ✔️ => Usuários podem se cadastrar no app e postar mensagens.
     Responsivo 📲 => Telas principais adaptáveis para diversos dispositivos.
 
 ## Tecnologias 💻
@@ -56,7 +55,7 @@
 ```bash
   firebase init
 ```
-### Colocar as configs do projeto seu Firebase nesta variável de ambiente no arquivo .env na raíz do projeto
+### Colocar as configs do seu projeto Firebase nesta variável de ambiente no arquivo .env na raíz do projeto
 ```bash
   VITE_FIREBASE_CONFIG='{
   "apiKey": "Sua API key",
